@@ -19,6 +19,7 @@ public class Main {
     static Decoder decode = new Decoder();
     static AtomsFactory AF = new AtomsFactory();
     static HashMap<String,Variable> vars = new HashMap<>();
+    static Aritmetic ALU = new Aritmetic();
 
     /**
      * @param args the command line arguments
@@ -53,6 +54,19 @@ public class Main {
                         vars.put(temp.name, temp);
                             System.out.println("Variable " + temp.name + " created correctly");
                         }
+                    }
+                    
+                    case "ADD" ->{
+                        ALU.add(expresion, vars);
+                    }
+                    case "QUIT" ->{
+                        ALU.quit(expresion, vars);
+                    }
+                    case "MUL" ->{
+                        ALU.multi(expresion, vars);
+                    }
+                    case "DIV" ->{
+                        ALU.div(expresion, vars);
                     }
                     
                 }
