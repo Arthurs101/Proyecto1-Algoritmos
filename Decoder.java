@@ -37,6 +37,9 @@ public class Decoder {
         if (evaluate("^[(][ ]*[/][ ]+[([a-z]+|[0-9]+)[ ]+([a-z]+|[0-9]+)]+[ ]*[)]$",expresion)){
             return "DIV";
         }
+        if (evaluate("^[(][ ]*equal[ ]+[([a-z]+|[0-9]+)[ ]+([a-z]+|[0-9]+)]+[ ]*[)]$",expresion)){
+            return "DIV";
+        }
           return null;
     }
     
