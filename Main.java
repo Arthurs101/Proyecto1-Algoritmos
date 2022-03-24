@@ -68,15 +68,6 @@ public class Main {
         if(matcher.find()){
             System.out.println(matcher.group().trim());
         }
-        pattern = Pattern.compile("[a-z]", Pattern.CASE_INSENSITIVE); //
-        matcher = pattern.matcher(expresion);
-        if(matcher.find()){
-            if(vars.containsKey(matcher.group().trim())){
-                 System.out.println(vars.get(matcher.group().trim()));
-            }else{
-                System.out.println((matcher.group().trim()));
-            }
-        }
         pattern = Pattern.compile("['][a-z]+[']", Pattern.CASE_INSENSITIVE); //
         matcher = pattern.matcher(expresion);
         if (matcher.find()) { 
@@ -84,6 +75,17 @@ public class Main {
                  temp = temp.replaceAll("'", "");
                  System.out.println(temp);
         }
+        
+        pattern = Pattern.compile("[ ]+[a-z]+[ ]*", Pattern.CASE_INSENSITIVE); //
+        matcher = pattern.matcher(expresion);
+        if(matcher.find()){
+            if(vars.containsKey(matcher.group().trim())){
+                 System.out.println(vars.get(matcher.group().trim()).getValue());
+            }else{
+                System.out.println((matcher.group().trim()) + "\t is not defined yet");
+            }
+        }
+        
     
     
     }

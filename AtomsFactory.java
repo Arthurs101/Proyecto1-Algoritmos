@@ -22,6 +22,7 @@ public class AtomsFactory {
 	    String varName = "";
             if (matcher.find()) {
 	         varName = matcher.group();
+                 varName = varName.replaceAll(" ", "");
 	    
             /*
             Revisar si es valor numerico
