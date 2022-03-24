@@ -13,7 +13,7 @@ public class Decoder {
     
         /*revisar si es una asigncion de variable
         */
-        if(evaluate("^[(][ ]*setq[ ]+[a-z]+[ ]+[0-9]+[ ]*[)]$",expresion) || evaluate("^[(][ ]*setq[ ]+[a-z]+[ ]+['][a-z]+['][ ]*[)]$",expresion)){
+        if(evaluate("^[(][ ]*setq[ ]+[a-zA-Z0-9]+[ ]+[0-9]+[ ]*[)]$",expresion) || evaluate("^[(][ ]*setq[ ]+[:alnum:]+[ ]+['][a-zA-Z0-9]+['][ ]*[)]$",expresion)){
             return "NEWVAR";
         }
         if(evaluate("^[(][ ]*end[ ]*[)]$",expresion)){
@@ -22,7 +22,7 @@ public class Decoder {
         if(evaluate("^[(][ ]*print[ ]+[a-z][ ]*[)]$",expresion)|| evaluate("^[(][ ]*print[ ]+[0-9][ ]*[)]$",expresion) ){
             return "PRINT";
         }
-        if(evaluate("^[(][ ]*print[ ]+['][a-z]+['][ ]*[)]$",expresion)){
+        if(evaluate("^[(][ ]*print[ ]+['][a-zA-Z0-9]+['][ ]*[)]$",expresion)){
              return "PRINT";
         }
         if (evaluate("^[(][ ]*[+][ ]+[([a-z]+|[0-9]+)[ ]+([a-z]+|[0-9]+)]+[ ]*[)]$",expresion)){

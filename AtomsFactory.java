@@ -17,7 +17,7 @@ public class AtomsFactory {
         /*
                 Hallar el nombre y el valor
             */
-            Pattern pattern = Pattern.compile("[ ]+[a-z]+[ ]+", Pattern.CASE_INSENSITIVE); //
+            Pattern pattern = Pattern.compile("[ ]+[a-zA-Z0-9]+[ ]+", Pattern.CASE_INSENSITIVE); //
 	    Matcher matcher = pattern.matcher(expresion);
 	    String varName = "";
             if (matcher.find()) {
@@ -36,7 +36,7 @@ public class AtomsFactory {
 	    	 return new Variable<Integer>(Integer.parseInt(matcher.group().trim()), varName);
                 }
              
-             pattern = Pattern.compile("[ ]+['][a-z]+['][ ]*", Pattern.CASE_INSENSITIVE); //
+             pattern = Pattern.compile("[ ]+['][a-zA-Z0-9]+['][ ]*", Pattern.CASE_INSENSITIVE); //
 	     matcher = pattern.matcher(expresion);
              if (matcher.find()) { 
                  String temp = matcher.group().trim();
