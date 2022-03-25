@@ -19,10 +19,10 @@ public class Decoder {
         if(evaluate("^[(][ ]*end[ ]*[)]$",expresion)){
             return "END";
         }
-        if(evaluate("^[(][ ]*print[ ]+[a-z][ ]*[)]$",expresion)|| evaluate("^[(][ ]*print[ ]+[0-9][ ]*[)]$",expresion) ){
+        if(evaluate("^[(][ ]*print[ ]+[a-zA-Z0-9][ ]*[)]$",expresion)|| evaluate("^[(][ ]*print[ ]+[0-9][ ]*[)]$",expresion) ){//print variables or numbers
             return "PRINT";
         }
-        if(evaluate("^[(][ ]*print[ ]+['][a-zA-Z0-9]+['][ ]*[)]$",expresion)){
+        if(evaluate("^[(][ ]*print[ ]+['][a-zA-Z0-9]+['][ ]*[)]$",expresion)){//print strings
              return "PRINT";
         }
         if (evaluate("^[(][ ]*[+][ ]+[([a-z]+|[0-9]+)[ ]+([a-z]+|[0-9]+)]+[ ]*[)]$",expresion)){
@@ -37,8 +37,11 @@ public class Decoder {
         if (evaluate("^[(][ ]*[/][ ]+[([a-z]+|[0-9]+)[ ]+([a-z]+|[0-9]+)]+[ ]*[)]$",expresion)){
             return "DIV";
         }
-        if (evaluate("^[(][ ]*equal[ ]+[([a-z]+|[0-9]+)[ ]+([a-z]+|[0-9]+)]+[ ]*[)]$",expresion)){
-            return "DIV";
+        if (evaluate("^[(][ ]*('|quote)[ ]*([(].+[)])[ ]*[)]$",expresion)){
+            return "QUT";
+        }
+        if (evaluate("^[(][ ]*equal[ ]*(.+)[ ]*[)]$",expresion)){//evaluate if x equals b
+            return "EVA01";
         }
           return null;
     }
