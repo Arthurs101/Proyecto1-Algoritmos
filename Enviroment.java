@@ -148,7 +148,122 @@ public class Enviroment {
     
     }
     public synchronized Object functionRunner(String expresion, String result,HashMap<String,Variable> varstemp){//metodo usado por funciones recursivas
-     return null;
+     switch(result){
+                    case "END" -> {
+                        System.out.println("You can't end me, kidding have a nice day");
+                        System.exit(0);
+                    }
+                    case "PRINT" ->{
+                        print(expresion);
+                    }
+                    
+                    case "NEWVAR" ->{
+                        Variable temp = AF.VariableCreatot(expresion);
+                        if(temp != null){
+                        vars.put(temp.name, temp);
+                            System.out.println("Variable " + temp.name + " created correctly");
+                        }
+                    }
+                    case "ADD" ->{
+                    Integer add = ALU.add(expresion, vars);
+                    if(add != null){
+                        System.out.println(add);
+                    }else{
+                        System.out.println("Error");
+                    }
+                    }
+                    case "QUIT" ->{
+                       Integer add = ALU.quit(expresion, vars);
+                       if(add != null){
+                        System.out.println(add);
+                        }else{
+                            System.out.println("Error");
+                        }
+                    }
+                    
+                    case "MUL"->{
+                        Integer add= ALU.multi(expresion, vars);
+                        if(add != null){
+                        System.out.println(add);
+                        }else{
+                            System.out.println("Error");
+                        }
+                    }
+                    case "DIV" ->{
+                        Integer add = ALU.div(expresion, vars);
+                        if(add != null){
+                        System.out.println(add);
+                        }else{
+                            System.out.println("Error");
+                        }
+                    }
+                    case "QUT" -> {
+                        quote(expresion);
+                    }
+                    case "EVA01" ->{
+                        Conditional temp = new Conditional();
+                        String tempR = temp.Equals(expresion, vars);
+                        if(tempR != null){
+                            System.out.println(tempR);
+                        }
+                    }
+                    case "EVA02"->{
+                        Conditional temp = new Conditional();
+                        String tempR = temp.MoreLess(expresion, vars);
+                        if(tempR != null){
+                            System.out.println(tempR);
+                        }
+                    }
+                    case "EVA03" ->{
+                        Conditional temp = new Conditional();
+                        String tempR = temp.morelessEqual(expresion, vars);
+                        if(tempR != null){
+                            System.out.println(tempR);
+                        }
+                    
+                    }
+                    case "EVA04" ->{
+                        Conditional temp = new Conditional();
+                        String tempR = temp.EqualValue(expresion, vars);
+                        if(tempR != null){
+                            System.out.println(tempR);
+                        }
+                    
+                    }
+                    case "DEFUN" ->{
+                        System.out.println("Defun");
+                        defun(expresion);
+                    }
+                    case "ADDFUN" -> {
+                    
+                    }
+                    case "QUITFUN" -> {
+                    
+                    }
+                    case "MULTIFUN" -> {
+                    
+                    }
+                    case"DIVFUN" -> {
+                    
+                    }
+                    case "returnInt" -> {
+                        Pattern pattern = Pattern.compile("[0-9]+", Pattern.CASE_INSENSITIVE); //
+                        Matcher matcher = pattern.matcher(expresion);
+                        if(matcher.find()){
+                            System.out.println(matcher.group().trim());
+                        }
+                    }
+                    case "COMPLEX?" ->{
+                    try{
+                        Combinadas complex = new Combinadas();
+                        System.out.println(complex.evaluate((List) complex.conver(expresion)));
+                    }catch(Exception e){
+                        System.out.println("Invalid Expresion");
+                    }
+                    }
+                    
+                }
+         return null;
     }
      private synchronized void print(String expresion){
         expresion = expresion.replaceAll("print", "");
@@ -185,7 +300,7 @@ public class Enviroment {
      
      }
      private synchronized void defun(String a){
-     Pattern pattern = Pattern.compile("^[(][ ]*defun[ ]+([a-zA-Z0-9]+)[ ]*[(](.+)[)][ ]*[(](.+)[)][ ]*[)]$",Pattern.CASE_INSENSITIVE );
+     Pattern pattern = Pattern.compile("^[(][ ]*defun[ ]+([a-zA-Z0-9]+)[ ]*[(](.+?)[)][ ]*[(](.+?)[)][ ]*[)]$",Pattern.CASE_INSENSITIVE );
         Matcher matcher = pattern.matcher(a);
         String name = "";
         if(matcher.find()){
