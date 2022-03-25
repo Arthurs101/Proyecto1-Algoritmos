@@ -1,5 +1,6 @@
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,9 +11,9 @@ public class Enviroment {
      
      AtomsFactory AF = new AtomsFactory();
      HashMap<String,Variable> vars = new HashMap<>();
+     HashMap<String,IFunction> fun = new HashMap<>();
      Aritmetic ALU = new Aritmetic();
-
-    private static Enviroment env;// variable estatica
+     private static Enviroment env;// variable estatica
     private Enviroment(){
     
     }
@@ -22,6 +23,7 @@ public class Enviroment {
         }
         return env;
     }
+    
     
     public synchronized void excecute(String expresion, String result){
     if(result != null){
@@ -42,16 +44,37 @@ public class Enviroment {
                         }
                     }
                     case "ADD" ->{
-                        ALU.add(expresion, vars);
+                    Integer add = ALU.add(expresion, vars);
+                    if(add != null){
+                        System.out.println(add);
+                    }else{
+                        System.out.println("Error");
+                    }
                     }
                     case "QUIT" ->{
-                        ALU.quit(expresion, vars);
+                       Integer add = ALU.quit(expresion, vars);
+                       if(add != null){
+                        System.out.println(add);
+                        }else{
+                            System.out.println("Error");
+                        }
                     }
+                    
                     case "MUL"->{
-                        ALU.multi(expresion, vars);
+                        Integer add= ALU.multi(expresion, vars);
+                        if(add != null){
+                        System.out.println(add);
+                        }else{
+                            System.out.println("Error");
+                        }
                     }
                     case "DIV" ->{
-                        ALU.div(expresion, vars);
+                        Integer add = ALU.div(expresion, vars);
+                        if(add != null){
+                        System.out.println(add);
+                        }else{
+                            System.out.println("Error");
+                        }
                     }
                     case "QUT" -> {
                         quote(expresion);
@@ -86,6 +109,37 @@ public class Enviroment {
                         }
                     
                     }
+                    case "DEFUN" ->{
+                        System.out.println("Defun");
+                        defun(expresion);
+                    }
+                    case "ADDFUN" -> {
+                    
+                    }
+                    case "QUITFUN" -> {
+                    
+                    }
+                    case "MULTIFUN" -> {
+                    
+                    }
+                    case"DIVFUN" -> {
+                    
+                    }
+                    case "returnInt" -> {
+                        Pattern pattern = Pattern.compile("[0-9]+", Pattern.CASE_INSENSITIVE); //
+                        Matcher matcher = pattern.matcher(expresion);
+                        if(matcher.find()){
+                            System.out.println(matcher.group().trim());
+                        }
+                    }
+                    case "COMPLEX?" ->{
+                    try{
+                        Combinadas complex = new Combinadas();
+                        System.out.println(complex.evaluate((List) complex.conver(expresion)));
+                    }catch(Exception e){
+                        System.out.println("Invalid Expresion");
+                    }
+                    }
                     
                 }
             }else{
@@ -93,12 +147,12 @@ public class Enviroment {
             }
     
     }
-    private synchronized void functionRunner(String expresion, String result,HashMap<String,Variable> varstemp){//metodo usado por funciones recursivas
-    
+    public synchronized Object functionRunner(String expresion, String result,HashMap<String,Variable> varstemp){//metodo usado por funciones recursivas
+     return null;
     }
      private synchronized void print(String expresion){
         expresion = expresion.replaceAll("print", "");
-        Pattern pattern = Pattern.compile("[0-9]", Pattern.CASE_INSENSITIVE); //
+        Pattern pattern = Pattern.compile("[0-9]+", Pattern.CASE_INSENSITIVE); //
 	Matcher matcher = pattern.matcher(expresion);
         if(matcher.find()){
             System.out.println(matcher.group().trim());
@@ -130,5 +184,43 @@ public class Enviroment {
         }
      
      }
+     private synchronized void defun(String a){
+     Pattern pattern = Pattern.compile("^[(][ ]*defun[ ]+([a-zA-Z0-9]+)[ ]*[(](.+)[)][ ]*[(](.+)[)][ ]*[)]$",Pattern.CASE_INSENSITIVE );
+        Matcher matcher = pattern.matcher(a);
+        String name = "";
+        if(matcher.find()){
+            System.out.println("YES Declaring");
+        /*
+        Obtener Nombre
+        */
+        name = matcher.group(1);
+        /*
+        Obtener Parametros
+        */
+        String paramtemp = matcher.group(2);
+        String[] params = paramtemp.split(" ");
+            System.out.println(params.toString());
+        /*
+        Obtener Instrucciones
+        */
+        String body = matcher.group(3);
+            System.out.println(body);
+        /*
+        Verficar si es recursiva
+        */
+        Pattern recursive = Pattern.compile("[(][ ]*t[ ]*([(].+?[)])[ ]*[)]",Pattern.CASE_INSENSITIVE );
+        Matcher matcherr = recursive.matcher(body);
+        if(matcherr.find()){
+            String faithJump = matcherr.group();
+            body = body.replaceAll("[(][ ]*t[ ]*([(].+?[)])[ ]*[)]", "");
+            try{
+                FunctionRecursive functionRecursive = new FunctionRecursive(name,body,faithJump,params);
+                fun.put(name, functionRecursive);
+        }catch(Exception e){
+            System.out.println("Function can't be declared");
+        }
+        }
+     }
     
+    }
 }
