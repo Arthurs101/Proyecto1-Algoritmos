@@ -58,8 +58,22 @@ public class Decoder {
         if(evaluate("^[(][ ]*defun[ ]+([a-zA-Z0-9]+)[ ]*([(].+[)])[ ]*([(].+[)])[ ]*[)]$",expresion)){//ejecutar una funcion 
             return "DEFUN";
         }
-        
-          return "COMPLEX";
+        if(evaluate("^[(][ ]*[+][ ]+[(][a-z]+[ ]*[(].[)][)][ ]+[(][a-zA-Z0-9]+[ ]*[ ]*[(].[)][)][ ]*[)]$",expresion)){ 
+            return "ADDFUN";
+        }
+        if(evaluate("^[(][ ]*[-][ ]+[(][a-z]+[ ]*[(].[)][)][ ]+[(][a-zA-Z0-9]+[ ]*[ ]*[(].[)][)][ ]*[)]$",expresion)){
+             return "QUITFUN";
+        }
+        if(evaluate("^[(][ ]*[*][ ]+[(][a-z]+[ ]*[(].[)][)][ ]+[(][a-zA-Z0-9]+[ ]*[ ]*[(].[)][)][ ]*[)]$",expresion)){
+             return "MULTIFUN";
+        }
+        if(evaluate("^[(][ ]*[/][ ]+[(][a-z]+[ ]*[(].[)][)][ ]+[(][a-zA-Z0-9]+[ ]*[ ]*[(].[)][)][ ]*[)]$",expresion)){
+             return "DIVFUN";
+        }
+        if(evaluate("^[(][ ]*[0-9]+[ ]*[)]$",expresion)){
+            return "returnInt";
+        }
+          return "COMPLEX?";//en caso de poder detectar la expresion, revisar si no es una expresion aritmetica compleja
     }
     
 

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 Clase para la realizacion de operaciones aritmeticas
 */
 public class Aritmetic {
-    public void add(String expresion, HashMap<String,Variable> var){
+    public Integer add(String expresion, HashMap<String,Variable> var){
     Pattern pattern = Pattern.compile("([a-z]+|[0-9]+)", Pattern.CASE_INSENSITIVE); //
     Matcher matcher = pattern.matcher(expresion);
     Integer total = 0;
@@ -32,12 +32,13 @@ public class Aritmetic {
             }
         
     }   if(print){
-        System.out.println(total);
+        return total;
         }
+        return null;
     }
     
     
-    public void quit(String expresion, HashMap<String,Variable> var){
+    public Integer quit(String expresion, HashMap<String,Variable> var){
     Pattern pattern = Pattern.compile("([a-z]+|[0-9]+)", Pattern.CASE_INSENSITIVE); //
     Matcher matcher = pattern.matcher(expresion);
     /*
@@ -85,14 +86,15 @@ public class Aritmetic {
                 }
 
         }   if(print){
-            System.out.println(total);
+            return total;
             }
         }
+        return null;
     }
     
     
     
-    public void multi(String expresion, HashMap<String,Variable> var){
+    public Integer multi(String expresion, HashMap<String,Variable> var){
     Pattern pattern = Pattern.compile("([a-z]+|[0-9]+)", Pattern.CASE_INSENSITIVE); //
     Matcher matcher = pattern.matcher(expresion);
     Integer total = 1; //se coloca como 1 puesto que no interfiere con el resultado de multiplicar los numeros
@@ -117,12 +119,13 @@ public class Aritmetic {
             }
         
     }   if(print){
-        System.out.println(total);
+        return total;
         }
+        return null;
     }
     
     
-    public void div(String expresion, HashMap<String,Variable> var){
+    public Integer div(String expresion, HashMap<String,Variable> var){
     Pattern pattern = Pattern.compile("([a-z]+|[0-9]+)", Pattern.CASE_INSENSITIVE); //
     Matcher matcher = pattern.matcher(expresion);
     /*
@@ -180,8 +183,10 @@ public class Aritmetic {
 
         }
             if(print){
-            System.out.println(total);
+            return total;
             }
         }
+        return null;
     }
+    
 }
