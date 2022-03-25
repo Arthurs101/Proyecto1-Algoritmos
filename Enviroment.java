@@ -41,19 +41,28 @@ public class Enviroment {
                             System.out.println("Variable " + temp.name + " created correctly");
                         }
                     }
-                    
                     case "ADD" ->{
                         ALU.add(expresion, vars);
                     }
                     case "QUIT" ->{
                         ALU.quit(expresion, vars);
                     }
-                    case "MUL "
-                        + "" ->{
+                    case "MUL"->{
                         ALU.multi(expresion, vars);
                     }
                     case "DIV" ->{
                         ALU.div(expresion, vars);
+                    }
+                    case "QUT" -> {
+                        quote(expresion);
+                    }
+                    case "EVA01" ->{
+                        Conditional temp = new Conditional();
+                        String tempR = temp.Equals(expresion, vars);
+                        if(tempR != null){
+                            System.out.println(tempR);
+                        }
+                        
                     }
                     
                 }
@@ -86,9 +95,15 @@ public class Enviroment {
                 System.out.println((matcher.group().trim()) + "\t is not defined yet");
             }
         }
-        
-    
-    
     }
+     
+     private synchronized void quote(String expresion){
+        Pattern pattern = Pattern.compile("^[(][ ]*('|quote)[ ]*([(].+[)])[ ]*[)]$", Pattern.CASE_INSENSITIVE); //
+         Matcher matcher = pattern.matcher(expresion);
+        while(matcher.find()){
+            System.out.println(matcher.group(2));
+        }
+     
+     }
     
 }
