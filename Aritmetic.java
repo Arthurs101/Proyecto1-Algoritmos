@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 Clase para la realizacion de operaciones aritmeticas
 */
 public class Aritmetic {
+    
+    private Decoder dec = new Decoder();
     public Integer add(String expresion, HashMap<String,Variable> var){
     Pattern pattern = Pattern.compile("([a-z]+|[0-9]+)", Pattern.CASE_INSENSITIVE); //
     Matcher matcher = pattern.matcher(expresion);
@@ -124,7 +126,6 @@ public class Aritmetic {
         return null;
     }
     
-    
     public Integer div(String expresion, HashMap<String,Variable> var){
     Pattern pattern = Pattern.compile("([a-z]+|[0-9]+)", Pattern.CASE_INSENSITIVE); //
     Matcher matcher = pattern.matcher(expresion);
@@ -188,5 +189,44 @@ public class Aritmetic {
         }
         return null;
     }
-    
+    public Integer funadd(String expresion, HashMap<String,IFunction> fun,HashMap<String, Variable> parameters,Enviroment env){//metodo para suma de funciones (recursividad)
+        Integer result = 0;
+        Pattern operators = Pattern.compile("[(][ ]*(([a-zA-Z0-9]+)[ ]*[(](.+?)[)])[ ]*[)]",Pattern.CASE_INSENSITIVE);
+        Matcher operatorseek = operators.matcher(expresion);
+        String[] op = new String[2];//obetner funciones a operar y verificar existencia
+        boolean first = true;
+        while(operatorseek.find()){
+            if(fun.containsKey(operatorseek.group(2).trim())){
+                if(first){
+                op[0] = operatorseek.group().trim();
+            first = false;
+            }else{
+                op[1] = operatorseek.group().trim();
+            }
+            }
+        }
+        for (int i = 0; i < op.length; i++) {
+            Pattern parts = Pattern.compile("[(][ ]*(([a-zA-Z0-9]+)[ ]*[(](.+?)[)])[ ]*[)]",Pattern.CASE_INSENSITIVE);
+            Matcher partsseek = parts.matcher(op[i]);
+            if(partsseek.find()){
+                /*
+                Operate parameter
+                */
+                String test = "(" + partsseek.group(3) + ")";
+                FunctionRecursive temp = (FunctionRecursive) fun.get(operatorseek.group(2).trim());
+                Object parameterresult = env.functionRunner(test,dec.decode(test),temp.parameters);
+                /*
+                Execute function
+                */
+                String paramtemp = String.valueOf(parameterresult);
+                Object rtemp = temp.run(paramtemp);
+                if(rtemp != null){
+                    if(rtemp.getClass().equals(Integer.class)){
+                        result += (Integer) rtemp;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }

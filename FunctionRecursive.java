@@ -102,6 +102,7 @@ private boolean faith = true; //realizar salto de fe
                 if(Result.getClass().equals(String.class)){
                     if(Result.equals("true")){
                         this.faith = false;
+                        return result;
                     }
                 }
             }else{
@@ -111,6 +112,7 @@ private boolean faith = true; //realizar salto de fe
     }
     if(faith){//realizar salto de fe
         result = env.functionRunner(faithjump,dec.decode(faithjump),parameters);
+        return result;
     }
     return result;
     }
