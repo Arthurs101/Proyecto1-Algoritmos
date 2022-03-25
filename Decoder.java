@@ -13,7 +13,7 @@ public class Decoder {
     
         /*revisar si es una asigncion de variable
         */
-        if(evaluate("^[(][ ]*setq[ ]+[a-zA-Z0-9]+[ ]+[0-9]+[ ]*[)]$",expresion) || evaluate("^[(][ ]*setq[ ]+[:alnum:]+[ ]+['][a-zA-Z0-9]+['][ ]*[)]$",expresion)){
+        if(evaluate("^[(][ ]*setq[ ]+[a-zA-Z0-9]+[ ]+[0-9]+[ ]*[)]$",expresion) || evaluate("^[(][ ]*setq[ ]+[a-zA-Z0-9]+[ ]+['][a-zA-Z0-9]+['][ ]*[)]$",expresion)){
             return "NEWVAR";
         }
         if(evaluate("^[(][ ]*end[ ]*[)]$",expresion)){
@@ -43,7 +43,23 @@ public class Decoder {
         if (evaluate("^[(][ ]*equal[ ]*(.+)[ ]*[)]$",expresion)){//evaluate if x equals b
             return "EVA01";
         }
-          return null;
+        if(evaluate("^[(][ ]*(<|>)[ ]*(.+)[ ]*[)]$",expresion)){
+            return "EVA02";
+        }
+        if(evaluate("^[(][ ]*(=<|=>)[ ]*(.+)[ ]*[)]$",expresion)){
+            return "EVA03";
+        }
+        if(evaluate("^[(][ ]*[=][ ]*(.+)[ ]*[)]$",expresion)){
+            return "EVA04";
+        }
+        if(evaluate("^[(][ ]*([a-zA-Z0-9])+[ ]*([(].+[)])[ ]*[)]$",expresion)){//ejecutar una funcion 
+            return "FUN";
+        }
+        if(evaluate("^[(][ ]*defun[ ]+([a-zA-Z0-9]+)[ ]*([(].+[)])[ ]*([(].+[)])[ ]*[)]$",expresion)){//ejecutar una funcion 
+            return "DEFUN";
+        }
+        
+          return "COMPLEX";
     }
     
 

@@ -62,13 +62,38 @@ public class Enviroment {
                         if(tempR != null){
                             System.out.println(tempR);
                         }
-                        
+                    }
+                    case "EVA02"->{
+                        Conditional temp = new Conditional();
+                        String tempR = temp.MoreLess(expresion, vars);
+                        if(tempR != null){
+                            System.out.println(tempR);
+                        }
+                    }
+                    case "EVA03" ->{
+                        Conditional temp = new Conditional();
+                        String tempR = temp.morelessEqual(expresion, vars);
+                        if(tempR != null){
+                            System.out.println(tempR);
+                        }
+                    
+                    }
+                    case "EVA04" ->{
+                        Conditional temp = new Conditional();
+                        String tempR = temp.EqualValue(expresion, vars);
+                        if(tempR != null){
+                            System.out.println(tempR);
+                        }
+                    
                     }
                     
                 }
             }else{
                 System.out.println("Expresion coulnd't be excecuted correctly");
             }
+    
+    }
+    private synchronized void functionRunner(String expresion, String result,HashMap<String,Variable> varstemp){//metodo usado por funciones recursivas
     
     }
      private synchronized void print(String expresion){
