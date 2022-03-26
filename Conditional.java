@@ -1,4 +1,16 @@
-
+/*
+Universidad del Valle de Guatemala
+Algoritmos y Estructura de datos
+Catedratico: Moises Alonso
+Tercer Semestre 2022
+Grupo 1:
+Arturo Argueta: 21527
+Astrid Glauser: 21299
+Abner Garcia: 21285
+Gonzalo Santizo: 21504
+Seccion 20
+Actividad: Proyecto 1 Fase 1
+*/
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,7 +48,7 @@ public class Conditional {
                 pattern = Pattern.compile("^[(][ ]*equal[ ]+([ ]*[0-9]+[ ]+[0-9]+[ ]*)[ ]*[)]$", Pattern.CASE_INSENSITIVE); //
                 matcher = pattern.matcher(expresion);
                 if(matcher.find()){
-                    String[] objects2 = matcher.group(1).split(" "); // obtener numeros
+                    String[] objects2 = matcher.group(1).split(" "); // obtener numeros a comparar
                     int a = Integer.valueOf(objects2[0]);
                     int b = Integer.valueOf(objects2[1]);
                     if(a == b){
@@ -45,7 +57,7 @@ public class Conditional {
                     return "false";
                 }
                
-            }else{
+            }else{//en caso no se halla una coincidencia de valores al descubrir que son variables
             System.out.println("cannot compare, one or both operators are not defined yet");
             return null;
             }
@@ -67,7 +79,9 @@ public class Conditional {
     }
     
     
-    
+    /*
+    Metodo para la comparacion > < , no admite Strings
+    */
     public String MoreLess(String expresion ,  HashMap<String,Variable> vars){
          /*
         No se pueede operar con Strings

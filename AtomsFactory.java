@@ -1,17 +1,22 @@
-
+/*
+Universidad del Valle de Guatemala
+Algoritmos y Estructura de datos
+Catedratico: Moises Alonso
+Tercer Semestre 2022
+Grupo 1:
+Arturo Argueta: 21527
+Astrid Glauser: 21299
+Abner Garcia: 21285
+Gonzalo Santizo: 21504
+Seccion 20
+Actividad: Proyecto 1 Fase 1
+*/
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author inmar
- */
+Clase encargada en la cracion de funciones y variables
+*/
 public class AtomsFactory {
     public Variable VariableCreatot(String expresion) {
         /*

@@ -1,4 +1,19 @@
-
+/*
+Universidad del Valle de Guatemala
+Algoritmos y Estructura de datos
+Catedratico: Moises Alonso
+Tercer Semestre 2022
+Grupo 1:
+Arturo Argueta: 21527
+Astrid Glauser: 21299
+Abner Garcia: 21285
+Gonzalo Santizo: 21504
+Seccion 20
+Actividad: Proyecto 1 Fase 1
+*/
+/*
+Clase Stack
+*/
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,19 @@
-
+/*
+Universidad del Valle de Guatemala
+Algoritmos y Estructura de datos
+Catedratico: Moises Alonso
+Tercer Semestre 2022
+Grupo 1:
+Arturo Argueta: 21527
+Astrid Glauser: 21299
+Abner Garcia: 21285
+Gonzalo Santizo: 21504
+Seccion 20
+Actividad: Proyecto 1 Fase 1
+*/
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import java.util.regex.Matcher;
@@ -22,7 +35,7 @@ private boolean faith = true; //realizar salto de fe
         this.name = name;
         this.instructions = instructions;
         this.faithjump = Jump;
-        
+        System.out.println(faithjump);
         for (int i = 0; i < args.length; i++) {
             parameters.put(args[i], null);
         }
@@ -48,7 +61,7 @@ private boolean faith = true; //realizar salto de fe
         this.instructions = instructions;
         this.faithjump = Jump;
         this.parameters = args;
-    
+        System.out.println(faithjump);
         /*
         Buscar condiciones
         */
@@ -77,10 +90,11 @@ private boolean faith = true; //realizar salto de fe
                 return null;
             }else{
             Set<String> keySet = parameters.keySet();
-            ArrayList<String> keySetA =  (ArrayList<String>) keySet; 
+            List<String> keySetA = new ArrayList<>(keySet);
             for (int i = 0; i < keySet.size(); i++) {
                 Variable temp = null;
-                temp = new Variable<Integer>(Integer.valueOf(parameArray[i]),keySetA.get(i));
+                System.out.println(parameArray[i]);
+                temp = new Variable<Integer>(Integer.valueOf(String.valueOf(parameArray[i])),keySetA.get(i));
                 parameters.put(keySetA.get(i),temp);
             }
         }
@@ -96,13 +110,15 @@ private boolean faith = true; //realizar salto de fe
     */
     
     Object result = null;
-    for(String k: exits.keySet()){
-            Object Result = env.functionRunner(k, dec.decode(k), parameters);
+    for(String k: exits.keySet()){//recorrer cada condicional
+            Object Result = env.functionRunner(k, dec.decode(k), this.parameters);
             if(Result != null){
                 if(Result.getClass().equals(String.class)){
-                    if(Result.equals("true")){
+                    if(Result.equals("true")){//si se cumple la condicional devolver el resultado de su instruccion
                         this.faith = false;
-                        return result;
+                        String instruction = exits.get(k);
+                        
+                        return env.functionRunner(instruction, dec.decode(instruction), this.parameters);
                     }
                 }
             }else{
@@ -115,6 +131,7 @@ private boolean faith = true; //realizar salto de fe
         return result;
     }
     return result;
+    
     }
     
 }
