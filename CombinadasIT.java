@@ -68,6 +68,28 @@ public void testEvaluate5() {
      assertEquals(expresut, resultado);
  }
 
+ public void TestEquals1() {
+    Combinadas combinada1=new Combinadas();
+     String resultado=(Double) combinada1.evaluate((List)combinada1.conver("(< 5 5)"));
+     String expresut = "false";
+     assertEquals(expresut, resultado);
+ }
+
+ public void TestEquals2() {
+    Combinadas combinada1=new Combinadas();
+     String resultado=(Double) combinada1.evaluate((List)combinada1.conver("(< 4 5)"));
+     String expresut = "true";
+     assertEquals(expresut, resultado);
+ }
+
+ public void TestEquals3() {
+    Combinadas combinada1=new Combinadas();
+     String resultado=(Double) combinada1.evaluate((List)combinada1.conver("(< 5 4)"));
+     String expresut = "false";
+     assertEquals(expresut, resultado);
+ }
+
+
 
 
 }
