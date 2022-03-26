@@ -1,4 +1,16 @@
-
+/*
+Universidad del Valle de Guatemala
+Algoritmos y Estructura de datos
+Catedratico: Moises Alonso
+Tercer Semestre 2022
+Grupo 1:
+Arturo Argueta: 21527
+Astrid Glauser: 21299
+Abner Garcia: 21285
+Gonzalo Santizo: 21504
+Seccion 20
+Actividad: Proyecto 1 Fase 1
+*/
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -191,42 +203,240 @@ public class Aritmetic {
     }
     public Integer funadd(String expresion, HashMap<String,IFunction> fun,HashMap<String, Variable> parameters,Enviroment env){//metodo para suma de funciones (recursividad)
         Integer result = 0;
-        Pattern operators = Pattern.compile("[(][ ]*(([a-zA-Z0-9]+)[ ]*[(](.+?)[)])[ ]*[)]",Pattern.CASE_INSENSITIVE);
+        Pattern operators = Pattern.compile("^[(][+][ ]*[(]([a-zA-Z0-9]+)[ ]+([(].+?[)])[)][ ]+[(]([a-zA-Z0-9]+)[ ]+([(].+?[)])[)][)]",Pattern.CASE_INSENSITIVE);
         Matcher operatorseek = operators.matcher(expresion);
-        String[] op = new String[2];//obetner funciones a operar y verificar existencia
-        boolean first = true;
-        while(operatorseek.find()){
-            if(fun.containsKey(operatorseek.group(2).trim())){
-                if(first){
-                op[0] = operatorseek.group().trim();
-            first = false;
-            }else{
-                op[1] = operatorseek.group().trim();
-            }
-            }
-        }
-        for (int i = 0; i < op.length; i++) {
-            Pattern parts = Pattern.compile("[(][ ]*(([a-zA-Z0-9]+)[ ]*[(](.+?)[)])[ ]*[)]",Pattern.CASE_INSENSITIVE);
-            Matcher partsseek = parts.matcher(op[i]);
-            if(partsseek.find()){
-                /*
-                Operate parameter
-                */
-                String test = "(" + partsseek.group(3) + ")";
-                FunctionRecursive temp = (FunctionRecursive) fun.get(operatorseek.group(2).trim());
-                Object parameterresult = env.functionRunner(test,dec.decode(test),temp.parameters);
-                /*
-                Execute function
-                */
-                String paramtemp = String.valueOf(parameterresult);
-                Object rtemp = temp.run(paramtemp);
-                if(rtemp != null){
-                    if(rtemp.getClass().equals(Integer.class)){
-                        result += (Integer) rtemp;
+        if(operatorseek.find()){
+            if(fun.containsKey(operatorseek.group(1).trim())){//si existe la primera funcion
+                //operar parametro
+                Object presult = env.functionRunner(operatorseek.group(2).trim(), dec.decode(operatorseek.group(2).trim()), parameters);
+                if(presult == null){
+                    return null;
+                }else{
+                    //relizar la operacion de la funcion
+                    IFunction temp = fun.get(operatorseek.group(1).trim());
+                    Object Fresult = temp.run(String.valueOf(presult));
+                    if(Fresult == null){
+                        return null;
+                    }else{
+                        try{//intentar sumar
+                            result += Integer.valueOf(String.valueOf(Fresult));
+                        }catch(Exception e){
+                            return null;
+                        }
                     }
-                }
+                        
+                }    
             }
+            else{
+            return null;
+            }
+            if(fun.containsKey(operatorseek.group(3).trim())){//si existe la primera funcion
+                //operar parametro
+                Object presult = env.functionRunner(operatorseek.group(4).trim(), dec.decode(operatorseek.group(4).trim()), parameters);
+                if(presult == null){
+                    return null;
+                }else{
+                    //relizar la operacion de la funcion
+                    IFunction temp = fun.get(operatorseek.group(3).trim());
+                    Object Fresult = temp.run(String.valueOf(presult));
+                    if(Fresult == null){
+                        return null;
+                    }else{
+                        try{//intentar sumar
+                            result += Integer.valueOf(String.valueOf(Fresult));
+                        }catch(Exception e){
+                            return null;
+                        }
+                    }
+                        
+                }    
+            }
+            else{
+            return null;
+            }
+            System.out.println("Result of some recursivity");
+            System.out.println(result);
+            return result;
         }
         return null;
-    }
+        }
+    
+    public Integer funquit(String expresion, HashMap<String,IFunction> fun,HashMap<String, Variable> parameters,Enviroment env){//metodo para suma de funciones (recursividad)
+        Integer result = 0;
+        Pattern operators = Pattern.compile("^[(][-][ ]*[(]([a-zA-Z0-9]+)[ ]+([(].+?[)])[)][ ]+[(]([a-zA-Z0-9]+)[ ]+([(].+?[)])[)][)]",Pattern.CASE_INSENSITIVE);
+        Matcher operatorseek = operators.matcher(expresion);
+        if(operatorseek.find()){
+            if(fun.containsKey(operatorseek.group(1).trim())){//si existe la primera funcion
+                //operar parametro
+                Object presult = env.functionRunner(operatorseek.group(2).trim(), dec.decode(operatorseek.group(2).trim()), parameters);
+                if(presult == null){
+                    return null;
+                }else{
+                    //relizar la operacion de la funcion
+                    IFunction temp = fun.get(operatorseek.group(1).trim());
+                    Object Fresult = temp.run(String.valueOf(presult));
+                    if(Fresult == null){
+                        return null;
+                    }else{
+                        try{//intentar colocarlo como el minuendo
+                            result = Integer.valueOf(String.valueOf(Fresult));
+                        }catch(Exception e){
+                            return null;
+                        }
+                    }
+                        
+                }    
+            }
+            else{
+            return null;
+            }
+            if(fun.containsKey(operatorseek.group(3).trim())){//si existe la primera funcion
+                //operar parametro
+                Object presult = env.functionRunner(operatorseek.group(4).trim(), dec.decode(operatorseek.group(4).trim()), parameters);
+                if(presult == null){
+                    return null;
+                }else{
+                    //relizar la operacion de la funcion
+                    IFunction temp = fun.get(operatorseek.group(3).trim());
+                    Object Fresult = temp.run(String.valueOf(presult));
+                    if(Fresult == null){
+                        return null;
+                    }else{
+                        try{//intentar sumar
+                            result += Integer.valueOf(String.valueOf(Fresult));
+                        }catch(Exception e){
+                            return null;
+                        }
+                    }
+                        
+                }    
+            }
+            else{
+            return null;
+            }
+            System.out.println("Result of some recursivity");
+            System.out.println(result);
+            return result;
+        }
+        return null;
+        }
+    public Integer funmulti(String expresion, HashMap<String,IFunction> fun,HashMap<String, Variable> parameters,Enviroment env){//metodo para suma de funciones (recursividad)
+        Integer result = 0;
+        Pattern operators = Pattern.compile("^[(][*][ ]*[(]([a-zA-Z0-9]+)[ ]+([(].+?[)])[)][ ]+[(]([a-zA-Z0-9]+)[ ]+([(].+?[)])[)][)]",Pattern.CASE_INSENSITIVE);
+        Matcher operatorseek = operators.matcher(expresion);
+        if(operatorseek.find()){
+            if(fun.containsKey(operatorseek.group(1).trim())){//si existe la primera funcion
+                //operar parametro
+                Object presult = env.functionRunner(operatorseek.group(2).trim(), dec.decode(operatorseek.group(2).trim()), parameters);
+                if(presult == null){
+                    return null;
+                }else{
+                    //relizar la operacion de la funcion
+                    IFunction temp = fun.get(operatorseek.group(1).trim());
+                    Object Fresult = temp.run(String.valueOf(presult));
+                    if(Fresult == null){
+                        return null;
+                    }else{
+                        try{//intentar colocarlo como el termino inicial
+                            result = Integer.valueOf(String.valueOf(Fresult));
+                        }catch(Exception e){
+                            return null;
+                        }
+                    }
+                        
+                }    
+            }
+            else{
+            return null;
+            }
+            if(fun.containsKey(operatorseek.group(3).trim())){//si existe la primera funcion
+                //operar parametro
+                Object presult = env.functionRunner(operatorseek.group(4).trim(), dec.decode(operatorseek.group(4).trim()), parameters);
+                if(presult == null){
+                    return null;
+                }else{
+                    //relizar la operacion de la funcion
+                    IFunction temp = fun.get(operatorseek.group(3).trim());
+                    Object Fresult = temp.run(String.valueOf(presult));
+                    if(Fresult == null){
+                        return null;
+                    }else{
+                        try{//intentar multiplicar
+                            result *= Integer.valueOf(String.valueOf(Fresult));
+                        }catch(Exception e){
+                            return null;
+                        }
+                    }
+                        
+                }    
+            }
+            else{
+            return null;
+            }
+            System.out.println("Result of some recursivity");
+            System.out.println(result);
+            return result;
+        }
+        return null;
+        }
+        public Integer fundiv(String expresion, HashMap<String,IFunction> fun,HashMap<String, Variable> parameters,Enviroment env){//metodo para suma de funciones (recursividad)
+        Integer result = 0;
+        Pattern operators = Pattern.compile("^[(][*][ ]*[(]([a-zA-Z0-9]+)[ ]+([(].+?[)])[)][ ]+[(]([a-zA-Z0-9]+)[ ]+([(].+?[)])[)][)]",Pattern.CASE_INSENSITIVE);
+        Matcher operatorseek = operators.matcher(expresion);
+        if(operatorseek.find()){
+            if(fun.containsKey(operatorseek.group(1).trim())){//si existe la primera funcion
+                //operar parametro
+                Object presult = env.functionRunner(operatorseek.group(2).trim(), dec.decode(operatorseek.group(2).trim()), parameters);
+                if(presult == null){
+                    return null;
+                }else{
+                    //relizar la operacion de la funcion
+                    IFunction temp = fun.get(operatorseek.group(1).trim());
+                    Object Fresult = temp.run(String.valueOf(presult));
+                    if(Fresult == null){
+                        return null;
+                    }else{
+                        try{//intentar colocarlo como el dividendo
+                            result = Integer.valueOf(String.valueOf(Fresult));
+                        }catch(Exception e){
+                            return null;
+                        }
+                    }
+                        
+                }    
+            }
+            else{
+            return null;
+            }
+            if(fun.containsKey(operatorseek.group(3).trim())){//si existe la primera funcion
+                //operar parametro
+                Object presult = env.functionRunner(operatorseek.group(4).trim(), dec.decode(operatorseek.group(4).trim()), parameters);
+                if(presult == null){
+                    return null;
+                }else{
+                    //relizar la operacion de la funcion
+                    IFunction temp = fun.get(operatorseek.group(3).trim());
+                    Object Fresult = temp.run(String.valueOf(presult));
+                    if(Fresult == null){
+                        return null;
+                    }else{
+                        try{//intentar dividir
+                            result /= Integer.valueOf(String.valueOf(Fresult));
+                        }catch(Exception e){
+                            return null;
+                        }
+                    }
+                        
+                }    
+            }
+            else{
+            return null;
+            }
+            System.out.println("Result of some recursivity");
+            System.out.println(result);
+            return result;
+        }
+        return null;
+        }
 }
+
