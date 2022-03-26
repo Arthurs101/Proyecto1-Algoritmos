@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
-Clase encargada en la cracion de funciones y variables
+Clase encargada en la cracion de variables
 */
 public class AtomsFactory {
     public Variable VariableCreatot(String expresion) {

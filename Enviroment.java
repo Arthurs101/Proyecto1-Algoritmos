@@ -130,7 +130,6 @@ public class Enviroment {
                     
                     }
                     case "DEFUN" ->{//declaracuib de una funcion
-                        System.out.println("Defun");
                         defun(expresion);
                     }
                     case "returnInt" -> {
@@ -171,7 +170,7 @@ public class Enviroment {
                     }
                     case "HELP" ->{
                         System.out.println("""
-                                           los strings se escriben entre ' ' : 'hola'
+                                           los strings se escriben entre ' ' : 'hola' , nota no reconoce strings con espacios u otro caracter especial, ejemplo 'hola mundo', 'hola_mundo' no los reconocera
                                            para declarar una variable (setq name value)
                                            para operaciones aritmeticas, soporta una cantidad de n numeros
                                            solo es de escribir la operacion a realizar, ejemplo (+ 5 5 5 5)
@@ -364,12 +363,12 @@ public class Enviroment {
         }
      
      }
-     private synchronized void defun(String a){
+     private synchronized void defun(String a){//crear variables
      Pattern pattern = Pattern.compile("^[(][ ]*defun[ ]+([a-zA-Z0-9]+)[ ]*[(](.+?)[)][ ]*[(](.+?)[)][ ]*[)]$",Pattern.CASE_INSENSITIVE );
         Matcher matcher = pattern.matcher(a);
         String name = "";
         if(matcher.find()){
-            System.out.println("YES Declaring");
+           
         /*
         Obtener Nombre
         */
@@ -379,12 +378,12 @@ public class Enviroment {
         */
         String paramtemp = matcher.group(2);
         String[] params = paramtemp.split(" ");
-            System.out.println(params.toString());
+            
         /*
         Obtener Instrucciones
         */
         String body= "(" + matcher.group(3) + ")";
-            System.out.println(body);
+            
         /*
         Verficar si es recursiva
         */
@@ -396,6 +395,7 @@ public class Enviroment {
             try{
                 FunctionRecursive functionRecursive = new FunctionRecursive(name,body,faithJump,params);
                 fun.put(name, functionRecursive);
+                System.out.println("Function Creted");
         }catch(Exception e){
             System.out.println("Function can't be declared");
         }

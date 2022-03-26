@@ -23,19 +23,18 @@ import java.util.regex.Pattern;
 Clase referente a las funciones con condicionales y recursion
 */
 public class FunctionRecursive implements IFunction {
-public HashMap<String, Variable> parameters = new HashMap<>() ;
-private HashMap<String, String> exits = new HashMap<>();
-private Enviroment env = Enviroment.getInstance();
-private final Decoder dec = new Decoder();
-public String faithjump = "";
-public String name;
-public String instructions;
+public HashMap<String, Variable> parameters = new HashMap<>() ;//parameros y variables locales
+private HashMap<String, String> exits = new HashMap<>();//condiciones de salida
+private Enviroment env = Enviroment.getInstance();//ambiente de ejecucion
+private final Decoder dec = new Decoder();//decodificador
+public String faithjump = "";//salto de fe (recursividad)
+public String name;//nombre
+public String instructions;//instrucciones
 private boolean faith = true; //realizar salto de fe
     public FunctionRecursive (String name,String instructions,String Jump,String[] args){
         this.name = name;
         this.instructions = instructions;
         this.faithjump = Jump;
-        System.out.println(faithjump);
         for (int i = 0; i < args.length; i++) {
             parameters.put(args[i], null);
         }
